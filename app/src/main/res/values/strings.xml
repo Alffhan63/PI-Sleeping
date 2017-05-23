@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">Sleeping In The Train</string>
+
+
+    <!-- Buttons strings -->
+    <string name="add_geofences">Add geofences</string>
+    <string name="remove_geofences">Remove geofences</string>
+
+    <string name="geofences_added">Geofences added</string>
+    <string name="geofences_removed">Geofences removed</string>
+
+    <!-- Error strings -->
+    <string name="not_connected">GoogleApiClient no yet connected. Try again.</string>
+    <string name="geofence_not_available">Geofence service is not available now</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences</string>
+    <string name="geofence_too_many_pending_intents">
+        You have provided too many PendingIntents to the addGeofences() call
+    </string>
+    <string name="unknown_geofence_error">
+        Unknown error: the Geofence service is not available now
+    </string>
+    <string name="geofence_transition_invalid_type">
+        Geofence transition error: invalid transition type %1$d
+    </string>
+
+    <!-- Transition type strings -->
+    <string name="geofence_transition_entered">Mendekati Stasiun Tujuan</string>
+    <string name="geofence_transition_exited">Anda Sudah Keluar Dari Stasiun Tujuan Anda</string>
+    <string name="geofence_transition_dwell">Anda Sampai Ditujuan</string>
+    <string name="unknown_geofence_transition">Unknown Transition</string>
+
+    <string name="geofence_transition_notification_text">Click notification to return to app</string>
+
+    <string-array name="stasiun">
+        <item> ---- Select -----</item>
+        <item>Bogor</item>
+        <item>Cilebut</item>
+        <item>Bojong Gede</item>
+        <item>Citayam</item>
+        <item>Depok</item>
+        <item>Depok Baru</item>
+        <item>Pondok Cina</item>
+        <item>Universitas Indonesia</item>
+        <item>Universitas Pancasila</item>
+        <item>Lenteng Agung</item>
+        <item>Tanjung Barat</item>
+        <item>Pasar Minggu</item>
+        <item>Pasar Minggu Baru</item>
+        <item>Duren Kalibata</item>
+        <item>Cawang</item>
+        <item>Tebet</item>
+        <item>Manggarai</item>
+        <item>Cikini</item>
+        <item>Gondangdia</item>
+        <item>Juanda</item>
+        <item>Sawah Besar</item>
+        <item>Mangga Besar</item>
+        <item>Jayakarta</item>
+        <item>Jakarta Kota</item>
+    </string-array>
+</resources>
