@@ -27,12 +27,15 @@
     </string>
 
     <!-- Transition type strings -->
-    <string name="geofence_transition_entered">Mendekati Stasiun Tujuan</string>
+    <string name="geofence_transition_entered">Sampai Tujuan</string>
     <string name="geofence_transition_exited">Anda Sudah Keluar Dari Stasiun Tujuan Anda</string>
     <string name="geofence_transition_dwell">Anda Sampai Ditujuan</string>
     <string name="unknown_geofence_transition">Unknown Transition</string>
 
-    <string name="geofence_transition_notification_text">Click notification to return to app</string>
+    <string name="geofence_transition_notification_text">Klik Untuk Mematikan</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
     <string-array name="stasiun">
         <item> ---- Select -----</item>
@@ -60,5 +63,6 @@
         <item>Mangga Besar</item>
         <item>Jayakarta</item>
         <item>Jakarta Kota</item>
+        <item>Rumah Gua</item>
     </string-array>
 </resources>
