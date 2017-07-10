@@ -29,8 +29,11 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.GeofencingApi;
+import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.sample.geofencing.Stasiun.Bogor;
 import com.google.android.gms.location.sample.geofencing.Stasiun.Bojonggede;
 import com.google.android.gms.location.sample.geofencing.Stasiun.Cawang;
@@ -79,6 +82,7 @@ public class MainActivity extends ActionBarActivity implements
         ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
     final Context context = this;
+
 
     protected static final String TAG = "MainActivity";
 
@@ -172,7 +176,7 @@ public class MainActivity extends ActionBarActivity implements
                         break;
 
                     case R.id.pengaturan:
-                        i =  new Intent(getApplicationContext(), Setting.class);
+                        i =  new Intent(getApplication(), Setting.class);
                         startActivity(i);
                         break;
 
@@ -181,7 +185,7 @@ public class MainActivity extends ActionBarActivity implements
                         String Judul = "Sleeping In The Train";
                         i.setType("text/plain");
                         i.putExtra(Intent.EXTRA_SUBJECT, Judul);
-                        String sAux = "Jadikan aplikasi ini sebagai alarm anda ketika anda sedang istirahat didalam CommuterLine\n\n";
+                        String sAux = "\nJadikan aplikasi ini sebagai alarm anda ketika anda sedang istirahat didalam CommuterLine\n\n";
                         sAux = sAux + "https://www.instagram.com/alfhan63/?hl=id  \n\n";
                         i.putExtra(Intent.EXTRA_TEXT, sAux);
                         startActivity(Intent.createChooser(i, "Sharing Apps"));
@@ -379,6 +383,7 @@ public class MainActivity extends ActionBarActivity implements
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
     }
 
     @Override
@@ -498,10 +503,17 @@ public class MainActivity extends ActionBarActivity implements
                     // This is the same pending intent that was used in addGeofences().
                     getGeofencePendingIntent()
             ).setResultCallback(this); // Result processed in onResult().
+            GeofenceTransitionsIntentService.r.stop();
+            GeofenceTransitionsIntentService.v.cancel();
+
+
         } catch (SecurityException securityException) {
             // Catch exception generated if the app does not use ACCESS_FINE_LOCATION permission.
             logSecurityException(securityException);
+        } catch (NullPointerException e) {
+
         }
+
     }
 
     //------------------------------------------------------------------------------------------------------------------------gambar
@@ -579,6 +591,7 @@ public class MainActivity extends ActionBarActivity implements
         // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
         // addGeofences() and removeGeofences().
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
     }
 
     /**
@@ -607,8 +620,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
 
                     // Create the geofence.
                     .build());
@@ -637,8 +649,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
 
                     // Create the geofence.
                     .build());
@@ -668,8 +679,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
 
                     // Create the geofence.
                     .build());
@@ -697,8 +707,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
 
                     // Create the geofence.
                     .build());
@@ -726,8 +735,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
 
                     // Create the geofence.
                     .build());
@@ -755,8 +763,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     // Set the transition types of interest. Alerts are only generated for these
                     // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
 
                     // Create the geofence.
                     .build());

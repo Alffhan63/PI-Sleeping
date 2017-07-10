@@ -22,8 +22,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
@@ -43,6 +49,11 @@ import java.util.List;
  * as the output.
  */
 public class GeofenceTransitionsIntentService extends IntentService {
+
+    public Uri alarm = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+    public Notification notification;
+    public static Ringtone r;
+    public static Vibrator v;
 
     protected static final String TAG = "GeofenceTransitionsIS";
 
@@ -79,8 +90,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
         // Test that the reported transition was of interest.
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
-                geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT)
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER )
                 {
 
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
@@ -132,9 +142,39 @@ public class GeofenceTransitionsIntentService extends IntentService {
      * If the user clicks the notification, control goes to the MainActivity.
      */
     private void sendNotification(String notificationDetails) {
+
+        // Play alarm
+        try {
+            SharedPreferences sp = getSharedPreferences("com.google.android.gms.location.sample.geofencing", MODE_PRIVATE);
+            if(sp.getBoolean("suara", true ) == true) {
+                r = RingtoneManager.getRingtone(getApplicationContext(), alarm);
+                if (r.isPlaying()) {
+                    r.stop();
+                } else {
+                    r.play();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            SharedPreferences sp = getSharedPreferences("com.google.android.gms.location.sample.geofencing", MODE_PRIVATE);
+            if(sp.getBoolean("getar", true) == true ) {
+                v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                long[] pattern = {0, 1000, 1000};
+                v.vibrate(pattern, 0);
+            }
+            else {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         // Create an explicit content Intent that starts the main Activity.
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-
+        notificationIntent.putExtra("alarm", String.valueOf(alarm));
 
 
         // Construct a task stack.
@@ -150,13 +190,8 @@ public class GeofenceTransitionsIntentService extends IntentService {
         PendingIntent notificationPendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
-
         // Get a notification builder that's compatible with platform versions >= 4
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-
 
         // Define the notification settings.
         builder.setSmallIcon(R.mipmap.ic_launcher)
@@ -176,9 +211,8 @@ public class GeofenceTransitionsIntentService extends IntentService {
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Notification notification = builder.build();
-        notification.defaults|= notification.DEFAULT_VIBRATE;
-        notification.defaults|= notification.DEFAULT_SOUND;
+        notification = builder.build();
+
         // Issue the notification
         mNotificationManager.notify(0,notification);
     }
